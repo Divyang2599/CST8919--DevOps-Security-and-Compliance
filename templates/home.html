@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><title>CST8919 Lab1</title></head>
+<body>
+  <h1>Welcome to CST8919 Lab 1</h1>
+  {% if session %}
+    <p>Logged in as: {{ session.userinfo.name }}</p>
+    <a href="/protected">Go to Protected Page</a><br>
+    <a href="/logout">Logout</a>
+    <pre>{{ pretty }}</pre>
+  {% else %}
+    <p>You are not logged in.</p>
+    <a href="/login">Login</a>
+  {% endif %}
+</body>
+</html>
