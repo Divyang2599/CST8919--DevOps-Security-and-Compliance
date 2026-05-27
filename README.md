@@ -22,6 +22,7 @@ Only logged-in users can access the protected page.
 
 ## Project Structure
 
+```
 cst8919-lab1/
 │
 ├── server.py          # Main Flask application
@@ -32,7 +33,7 @@ cst8919-lab1/
 └── templates/
 ├── home.html      # Home page (login/logout)
 └── protected.html # Protected page (only for logged-in users)
-
+```
 ---
 
 ## How to Set Up and Run This App
