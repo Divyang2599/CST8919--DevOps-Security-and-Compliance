@@ -1,4 +1,3 @@
-# CST8919--DevOps-Security-and-Compliance
 
 # CST8919 Lab 1 - Flask Web App with Auth0 Login
 
