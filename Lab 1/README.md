@@ -8,6 +8,12 @@ Only logged-in users can access the protected page.
 
 ---
 
+## Demo Video
+
+[YouTube Demo Link - Add your link here after recording]
+
+---
+
 ## Concepts Used in This Lab
 
 - **Authentication (AuthN):** Checking who you are (login with email/password)
@@ -101,11 +107,6 @@ Then open your browser and go to: `http://localhost:3000`
 
 ---
 
-## Demo Video
-
-[YouTube Demo Link - Add your link here after recording]
-
----
 
 ## What I Learned
 
