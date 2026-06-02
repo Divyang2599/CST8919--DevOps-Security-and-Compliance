@@ -10,7 +10,7 @@ Only logged-in users can access the protected page.
 
 ## Demo Video
 
-[YouTube Demo Link - Add your link here after recording]
+[YouTube Demo Link - https://youtu.be/VrteuHVzXZQ?si=fHlIlqCZHLJ1tgvv]
 
 ---
 
