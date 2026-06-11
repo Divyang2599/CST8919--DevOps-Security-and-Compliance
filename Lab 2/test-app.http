@@ -1,0 +1,68 @@
+### CST8919 Lab 2 - test-app.http
+### Requires the "REST Client" VS Code extension.
+### Replace <your-app-name> with your deployed Web App name.
+
+@host = https://<your-app-name>.azurewebsites.net
+
+### 1. Health check (should return 200 ok)
+GET {{host}}/
+
+### 2. Successful login (logs LOGIN_SUCCESS)
+POST {{host}}/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "P@ssw0rd123"
+}
+
+### 3. Single failed login (logs LOGIN_FAILED)
+POST {{host}}/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "wrong-password"
+}
+
+### --------------------------------------------------------------------
+### 4. Brute-force simulation.
+### Click "Send Request" on EACH of the blocks below (6 failures > the
+### threshold of 5). Faster alternative: use the curl loop in the README.
+### --------------------------------------------------------------------
+
+### Attempt 1
+POST {{host}}/login
+Content-Type: application/json
+
+{ "username": "admin", "password": "guess1" }
+
+### Attempt 2
+POST {{host}}/login
+Content-Type: application/json
+
+{ "username": "admin", "password": "guess2" }
+
+### Attempt 3
+POST {{host}}/login
+Content-Type: application/json
+
+{ "username": "admin", "password": "guess3" }
+
+### Attempt 4
+POST {{host}}/login
+Content-Type: application/json
+
+{ "username": "admin", "password": "guess4" }
+
+### Attempt 5
+POST {{host}}/login
+Content-Type: application/json
+
+{ "username": "admin", "password": "guess5" }
+
+### Attempt 6
+POST {{host}}/login
+Content-Type: application/json
+
+{ "username": "admin", "password": "guess6" }
