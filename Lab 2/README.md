@@ -7,7 +7,7 @@ me when brute-force behaviour is detected.
 
 ## Demo video
 
-YouTube: <link here>
+YouTube: https://youtu.be/wPwwWF6wd1E?si=iWzcC9C5Icj_J79J
 
 ## Architecture
 
