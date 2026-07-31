@@ -1,0 +1,21 @@
+# --- Terraform ---
+# Local state can contain subscription IDs and resource metadata — NEVER commit it.
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+crash.log
+crash.*.log
+
+# Local overrides
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# CLI config that may hold credentials
+.terraformrc
+terraform.rc
+
+# NOTE: .terraform.lock.hcl is intentionally NOT ignored — commit it so
+# provider versions are reproducible across machines. That's best practice.
