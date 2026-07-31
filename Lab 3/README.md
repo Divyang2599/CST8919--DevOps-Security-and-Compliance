@@ -1,6 +1,6 @@
-# CST8919 – Lab 3: Cloud Governance with Azure Policy
+# CST8919 - Lab 3: Cloud Governance with Azure Policy
 
-**Course:** CST8919 – DevOps Security and Compliance  
+**Course:** CST8919 - DevOps Security and Compliance  
 **Student:** Divyang Lodariya  
 **Video demo:** [PASTE YOUR VIDEO LINK HERE]  
 
