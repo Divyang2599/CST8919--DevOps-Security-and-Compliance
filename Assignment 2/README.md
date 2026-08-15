@@ -140,8 +140,7 @@ In CST8919, we used **Azure Monitor** to collect logs, **Log Analytics** to run 
 | **Query Language** |   KQL (Kusto Query Language) - very powerful for threat analysis and correlation |   CloudWatch Insights - SQL-like but less powerful than KQL |   Logging Query Language (LQL) - simple filter-based, less powerful than KQL |
 | **Dashboards & Visualization** |   Azure Workbooks and dashboards, integration with Power BI and Grafana |   CloudWatch Dashboards, integration with Grafana and Amazon QuickSight |   Cloud Monitoring Dashboards, integration with Looker Studio and Grafana |
 | **Alerting** |   Alert rules based on metrics, log queries, and activity |   CloudWatch Alarms trigger on any metric or log filter |   Alerting policies on metrics or log-based metrics |
-| **API Audit Trail** |   Azure Activity Log captures all ARM (management-plane) API calls |   AWS CloudTrail captures all AWS API calls - the gold standard for audit trails |   Cloud Audit Logs capture Admin Activity, Data Access, and System Events separately |
-| **Application Performance** |   Application Insights for APM (application performance monitoring) |   CloudWatch Application Insights + AWS X-Ray for tracing |   Cloud Trace + Cloud Profiler for distributed tracing |
+
 
 ---
 
@@ -162,9 +161,6 @@ In CST8919, we used **Azure Monitor** to collect logs, **Log Analytics** to run 
 |---|---|---|---|
 | **Free Tier** | First 5 GB/month free; Activity Logs free | 10 custom metrics free; 5 GB CloudWatch Logs free | Free for system metrics; first 50 GB/month logging free |
 | **Data Ingestion Cost** | ~$2.76 USD/GB after the free tier | ~$0.50 USD/GB for CloudWatch Logs after free tier | ~$0.01 USD/GB after 50 GB free |
-| **Metrics Cost** | Free for Azure platform metrics | $0.30/metric/month for custom metrics | Free for built-in metrics; $0.18/metric/month for custom |
-| **Key Cost Driver** | Volume of log data ingested into Log Analytics workspace | Volume of log data stored in CloudWatch Logs | Volume beyond the generous 50 GB free tier |
-| **Best Value** | Good for Microsoft-heavy environments; bundled with many plans | Can get expensive at scale; careful log filtering recommended | Best value for large log volumes due to the 50 GB free tier |
 
 ---
 
@@ -218,10 +214,6 @@ In CST8919, we used **Azure Policy** to define rules (Policy Definitions), group
 | **Block Bad Configs at Creation** |   Deny effect - blocks non-compliant resources before they exist |   SCPs can deny IAM actions, but Config Rules only flag after creation |   Resource Manager constraints block non-compliant deployments |
 | **Group Rules Together** |   Initiatives (Policy Sets) - bundle many definitions into one |   AWS Config Conformance Packs - bundle many rules |   Limited - constraints must be applied individually |
 | **Auto-Fix Non-Compliant Resources** |   DeployIfNotExists and Modify effects for auto-remediation |   AWS Config Remediation Actions using SSM Automation |   Limited auto-remediation - usually requires Cloud Functions |
-| **Compliance Dashboard** |   Built-in compliance reporting with percentage scores |   AWS Config Dashboard with resource compliance status |   Policy Compliance Dashboard in Security Command Center |
-| **Built-In Rule Library** |   200+ built-in policies plus regulatory initiative packs |   100+ AWS managed Config rules |   ~50+ pre-built constraints covering common security cases |
-| **Regulatory Compliance Packs** |   ISO 27001, NIST, CIS, PCI-DSS, Canadian PBMM - one-click initiatives |   CIS Benchmarks, PCI-DSS, HIPAA conformance packs |   CIS GCP Benchmarks, PCI-DSS, HIPAA constraints available |
-| **Scope Inheritance** |   Apply at Management Group → flows to all subscriptions below |   SCPs apply at OU level → flow to all accounts below |   Apply at Organization → flows to all Folders and Projects |
 
 ---
 
@@ -258,7 +250,7 @@ In CST8919, we used **Azure Policy** to define rules (Policy Definitions), group
 
 ---
 
-### Key Differences (Plain Language Summary)
+### Key Differences
 
 - **Azure Policy** is the most straightforward and cost-effective governance tool. Rules are written in JSON, applied at any scope, and violations are blocked in real time at zero cost. The Initiatives feature makes grouping related rules easy. Best-in-class for enterprises.
 - **AWS Config + SCPs** requires two separate services to achieve what Azure Policy does in one. Config evaluates compliance after deployment (reactive); SCPs set hard permission limits. Together they work, but the setup is more complex and Config is not free.
@@ -296,11 +288,8 @@ In CST8919, we used **Microsoft Defender for Cloud**, which has three components
 | **Workload Protection (CWPP)** |   Defender for Servers, Containers, Databases, Storage - real-time threat protection |   Amazon GuardDuty - real-time threat detection for EC2, S3, IAM, Kubernetes |   SCC Premium's Threat Intelligence detects active threats on GCP workloads |
 | **Vulnerability Scanning** |   Integrated vulnerability assessment for VMs and containers |   Amazon Inspector - automated vulnerability scanning for EC2 and container images |   SCC Web Security Scanner + Container Analysis for vulnerability detection |
 | **DevSecOps (Code Scanning)** |   Scans Terraform/ARM/Bicep templates in GitHub/Azure DevOps pipelines |   AWS CodeGuru Security scans code in CodePipeline for security issues |   Cloud Build integration with Container Analysis for container image scanning |
-| **Multi-Cloud Support** |   Covers Azure, AWS, and GCP in a single dashboard |   Primarily AWS-native; limited partner integrations |   GCP-native; limited external cloud support |
-| **Secure Score / Health Score** |   Secure Score (0–100%) with prioritized recommendations |   Security Score in Security Hub |   Security marks and findings score in SCC |
-| **Alert Aggregation** |   All findings in one Defender for Cloud dashboard |   Security Hub as the central aggregation point |   SCC as the central findings dashboard |
-| **Compliance Standards** |   CIS, PCI-DSS, NIST, ISO 27001, Canadian PBMM, Azure Security Benchmark |   CIS AWS Foundations, PCI-DSS, NIST, FSBP |   CIS GCP Benchmarks, PCI-DSS, NIST, ISO 27001 |
-
+| **Multi-Cloud Support** |   Covers Azure, AWS, and GCP in a single dashboard |   Primarily AWS-native; limited partner integrations |   GCP-native; limited external cloud support | 
+ 
 ---
 
 ### Security & Compliance
@@ -338,7 +327,7 @@ In CST8919, we used **Microsoft Defender for Cloud**, which has three components
 
 ---
 
-### Key Differences (Plain Language Summary)
+### Key Differences
 
 - **Microsoft Defender for Cloud** is the most unified and easiest to set up. One service covers posture management, workload protection, and DevSecOps scanning. Its multi-cloud support (can also monitor AWS and GCP resources) is a significant advantage.
 - **AWS Security Hub + GuardDuty + Inspector** requires three separate services to match Defender's capabilities. GuardDuty is considered best-in-class for threat detection in AWS environments, using machine learning on VPC Flow Logs and CloudTrail. The separate setup adds complexity.
@@ -379,8 +368,7 @@ In CST8919, we used **Microsoft Sentinel** as our SIEM/SOAR. It ingests data via
 | **Automated Response (SOAR)** |   Native Playbooks via Logic Apps - trigger on any alert, execute multi-step responses |   EventBridge rules + Lambda functions for automation (requires custom code, no low-code interface) |   Security Operations (Siemplify) - native SOAR with playbooks, case management, and automation |
 | **Hunting (Proactive Search)** |   Built-in hunting queries in KQL; Jupyter Notebooks for advanced analysis |   Amazon Detective supports some graph-based hunting; CloudWatch Insights for log search |   Chronicle's retroactive search - search across 1+ year of data in seconds |
 | **Threat Intelligence Integration** |   Microsoft Threat Intelligence, STIX/TAXII feeds, custom indicators |   AWS integrates with third-party STIX/TAXII feeds via Security Hub |   Google Threat Intelligence + Mandiant (world-class threat research) |
-| **Case Management** |   Sentinel Incidents - track alerts, assign to analysts, document investigation |   No native case management - requires integration with Jira, ServiceNow, or PagerDuty |   Chronicle Security Operations includes native case management and analyst workspace |
-| **Multi-Cloud Detection** |   Native connectors for AWS CloudTrail and GCP audit logs |   Primarily AWS-native; third-party tools needed for Azure/GCP |   Primarily GCP-native; third-party connectors for AWS/Azure |
+
 
 ---
 
@@ -420,30 +408,11 @@ In CST8919, we used **Microsoft Sentinel** as our SIEM/SOAR. It ingests data via
 
 ---
 
-### Key Differences (Plain Language Summary)
+### Key Differences 
 
 - **Microsoft Sentinel** is the most complete cloud-native SIEM/SOAR available today. Its Logic Apps Playbooks are easy to build without coding, the Fusion AI catches complex multi-stage attacks, and KQL enables extremely powerful custom detections. For Microsoft-stack environments, it is the clear leader.
 - **AWS** does not have a single native SIEM. Security Lake + Detective + EventBridge + Lambda together provide SIEM/SOAR capabilities, but require significantly more setup, custom code (Lambda), and integration work. For organizations that need more control and already have security engineers comfortable with AWS, this approach is very flexible but more complex.
 - **Google Chronicle** is a formidable competitor - especially for speed and scale. Chronicle can search over a year of security data in seconds (Google's infrastructure advantage), and Mandiant's threat intelligence (owned by Google) is world-class. Security Operations (formerly Siemplify) is a strong SOAR. Best for organizations that prioritize forensic speed and threat intelligence quality.
-
----
-
-## Summary & Key Takeaways
-
-### Side-by-Side Comparison: Which Platform Wins Each Category?
-
-| Category | Azure | AWS | GCP | Notes |
-|---|---|---|---|---|
-| **IAM & SSO ease of use** | ⭐ Best | Good | Good | Entra ID + Conditional Access is most feature-rich |
-| **API Audit Trail quality** | Good | ⭐ Best | Good | CloudTrail is widely recognized as the gold standard |
-| **Log query power (KQL vs others)** | ⭐ Best | Good | Good | KQL is more powerful than CloudWatch Insights or LQL |
-| **Policy enforcement cost** | ⭐ Free | Paid | ⭐ Free | Azure Policy and GCP Org Policy are both free; AWS Config costs money |
-| **CSPM (posture management)** | ⭐ Best | Good | Good | Defender for Cloud is the most unified; AWS requires multiple services |
-| **Threat detection quality** | ⭐ Best | ⭐ Best | Good | GuardDuty and Sentinel are both excellent; Chronicle is growing |
-| **SOAR (automated response)** | ⭐ Best | Good | Good | Logic Apps is easiest; Lambda requires coding; Security Operations is solid |
-| **Multi-cloud visibility** | ⭐ Best | Limited | Limited | Defender for Cloud covers Azure, AWS, and GCP from one dashboard |
-| **Free tier generosity** | Good | Good | ⭐ Best | GCP has the most generous free tiers across logging and security tools |
-| **Pricing transparency** | Good | Good |   Harder | Chronicle pricing is enterprise-negotiated; harder to estimate |
 
 ---
 
@@ -462,19 +431,10 @@ The biggest lesson from this comparison: **the concepts are the same across all 
 ## References
 
 - Microsoft Azure Documentation - [https://learn.microsoft.com/en-us/azure/](https://learn.microsoft.com/en-us/azure/)
-- Microsoft Entra ID Documentation - [https://learn.microsoft.com/en-us/entra/identity/](https://learn.microsoft.com/en-us/entra/identity/)
 - Microsoft Defender for Cloud - [https://learn.microsoft.com/en-us/azure/defender-for-cloud/](https://learn.microsoft.com/en-us/azure/defender-for-cloud/)
-- Microsoft Sentinel Documentation - [https://learn.microsoft.com/en-us/azure/sentinel/](https://learn.microsoft.com/en-us/azure/sentinel/)
-- Azure Policy Documentation - [https://learn.microsoft.com/en-us/azure/governance/policy/](https://learn.microsoft.com/en-us/azure/governance/policy/)
 - AWS Identity and Access Management - [https://docs.aws.amazon.com/iam/](https://docs.aws.amazon.com/iam/)
-- AWS Security Hub - [https://docs.aws.amazon.com/securityhub/](https://docs.aws.amazon.com/securityhub/)
-- Amazon GuardDuty - [https://docs.aws.amazon.com/guardduty/](https://docs.aws.amazon.com/guardduty/)
-- Amazon CloudWatch - [https://docs.aws.amazon.com/cloudwatch/](https://docs.aws.amazon.com/cloudwatch/)
-- AWS Config - [https://docs.aws.amazon.com/config/](https://docs.aws.amazon.com/config/)
 - Google Cloud IAM Documentation - [https://cloud.google.com/iam/docs](https://cloud.google.com/iam/docs)
-- Google Security Command Center - [https://cloud.google.com/security-command-center/docs](https://cloud.google.com/security-command-center/docs)
-- Google Chronicle - [https://cloud.google.com/chronicle/docs](https://cloud.google.com/chronicle/docs)
-- Google Cloud Logging - [https://cloud.google.com/logging/docs](https://cloud.google.com/logging/docs)
+
 - Google Organization Policy Service - [https://cloud.google.com/resource-manager/docs/organization-policy/overview](https://cloud.google.com/resource-manager/docs/organization-policy/overview)
 - CST8919 Course Materials - Algonquin College, Ottawa (2025)
 
